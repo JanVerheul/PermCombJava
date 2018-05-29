@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import slist.SList;
+import slist.rec.SL;
 import slist.SListNil;
 
 public class PermComb {
@@ -19,9 +20,9 @@ public class PermComb {
     }
     private static <T> void repeatingPermRec(SList<T> elems, int depth, SList<T> partResult, Consumer<SList<T>> f) {
     	switch (depth) {
-		    case 0: f.accept(new SListNil<T>()); break;
-		    case 1: for (T elem : elems) f.accept(SList.cons(elem, partResult)); break;
-		    default: for (T elem : elems) repeatingPermRec(elems, depth - 1, SList.cons(elem, partResult), f);
+		    case 0: f.accept(SL.empty()); break;
+		    case 1: for (T elem : elems) f.accept(SL.cons(elem, partResult)); break;
+		    default: for (T elem : elems) repeatingPermRec(elems, depth - 1, SL.cons(elem, partResult), f);
     	}
     }
    
@@ -35,22 +36,22 @@ public class PermComb {
         if (genSize > elems.size()) throw new IllegalArgumentException("Lengths over elems.size not allowed in nonRepeatingPerm...");
         nonRepeatingPermRec(elems.reverse(), genSize, new SListNil<T>(), f);
     }
-    private static <T> SList<T> removeElem(SList<T> elems, T elem) {
-    	if (elems.isEmpty()) {
-    		return elems;
-    	}
-    	else if (elems.getHead().equals(elem)) {
-    		return removeElem(elems.getTail(), elem);
-    	}
-    	else {
-    		return SList.cons(elems.getHead(), removeElem(elems.getTail(), elem));
-    	}
-    }
+//    private static <T> SList<T> removeElem(SList<T> elems, T elem) {
+//    	if (elems.isEmpty()) {
+//    		return elems;
+//    	}
+//    	else if (elems.head().equals(elem)) {
+//    		return removeElem(elems.tail(), elem);
+//    	}
+//    	else {
+//    		return SL.cons(elems.head(), removeElem(elems.tail(), elem));
+//    	}
+//    }
     private static <T> void nonRepeatingPermRec(SList<T> elems, int depth, SList<T> partResult, Consumer<SList<T>> f) {
     	switch (depth) {
-		    case 0: f.accept(new SListNil<T>()); break;
-		    case 1: for (T elem : elems) f.accept(SList.cons(elem, partResult)); break;
-		    default: for (T elem : elems) nonRepeatingPermRec(removeElem(elems, elem), depth - 1, SList.cons(elem, partResult), f);
+		    case 0: f.accept(SL.empty()); break;
+		    case 1: for (T elem : elems) f.accept(SL.cons(elem, partResult)); break;
+		    default: for (T elem : elems) nonRepeatingPermRec(elems.removeOne(elem), depth - 1, SL.cons(elem, partResult), f);
     	}
     }
 
@@ -65,9 +66,9 @@ public class PermComb {
     public static <T> void repeatingComb(SList<T> elems, int genSize, Consumer<SList<T>> f) {
         if (genSize < 0) throw new IllegalArgumentException("Negative lengths not allowed in repeatingComb...");
         int simulationSize = genSize + elems.size() - 1;
-        SList<Integer> intList = new SListNil<Integer>();
+        SList<Integer> intList = SL.empty();
         for (int i = 0; i < simulationSize; i++) {
-        	intList = SList.cons(i, intList);
+        	intList = SL.cons(i, intList);
         }
         nonRepeatingCombRec(intList, genSize, new SListNil<Integer>(), new SimulationMapper<T>(elems, f));
     }
@@ -82,11 +83,11 @@ public class PermComb {
     	public void accept(SList<Integer> simList) {
     		int expecter = 0;
     		int index = 0;
-    		SList<T> result = new SListNil<T>();
+    		SList<T> result = SL.empty();
     		for (int i : simList) {
     			index = index + (i - expecter);
     			expecter = i + 1;
-    			result = SList.cons(elems.get(index), result);
+    			result = SL.cons(elems.get(index), result);
     		}
     		this.exConsumer.accept(result.reverse());
     	}
@@ -99,14 +100,14 @@ public class PermComb {
     public static <T> void nonRepeatingComb(SList<T> elems, int genSize, Consumer<SList<T>> f) {
         if (genSize < 0) throw new IllegalArgumentException("Negative lengths not allowed in nonRepeatingComb...");
         if (genSize > elems.size()) throw new IllegalArgumentException("Lengths over elems.size not allowed in nonRepeatingComb...");
-        nonRepeatingCombRec(elems.reverse(), genSize, new SListNil<T>(), f);
+        nonRepeatingCombRec(elems.reverse(), genSize, SL.empty(), f);
     }
     private static <T> void nonRepeatingCombRec(SList<T> elems, int length, SList<T> partResult, Consumer<SList<T>> f) {
         if (elems.size() == length) f.accept(elems.reverse().append(partResult));
         else {
             if (!elems.isEmpty()) {
-                nonRepeatingCombRec(elems.getTail(), length, partResult, f);
-                if (length > 0) nonRepeatingCombRec(elems.getTail(), length - 1, SList.cons(elems.getHead(), partResult), f);
+                nonRepeatingCombRec(elems.tail(), length, partResult, f);
+                if (length > 0) nonRepeatingCombRec(elems.tail(), length - 1, SL.cons(elems.head(), partResult), f);
             }
         }
     }
@@ -123,7 +124,7 @@ public class PermComb {
     public static <T> Optional<SList<T>> nonRepeatingCombSeekFirst(SList<T> elems, int genSize, Predicate<SList<T>> f) {
         if (genSize < 0) throw new IllegalArgumentException("Negative lengths not allowed in nonRepeatingComb...");
         if (genSize > elems.size()) throw new IllegalArgumentException("Lengths over elems.size not allowed in nonRepeatingComb...");
-        return nonRepeatingCombSeekFirstRec(elems.reverse(), genSize, new SListNil<T>(), f);
+        return nonRepeatingCombSeekFirstRec(elems.reverse(), genSize, SL.empty(), f);
     }
     private static <T> Optional<SList<T>> nonRepeatingCombSeekFirstRec(SList<T> elems, int length, SList<T> partResult, Predicate<SList<T>> f) {
         if (elems.size() == length) {
@@ -137,12 +138,12 @@ public class PermComb {
         }
         else {
             if (!elems.isEmpty()) {
-                Optional<SList<T>> result = nonRepeatingCombSeekFirstRec(elems.getTail(), length, partResult, f);
+                Optional<SList<T>> result = nonRepeatingCombSeekFirstRec(elems.tail(), length, partResult, f);
                 if (result.isPresent()) {
                 	return result;
                 }
                 else if (length > 0) {
-                	return nonRepeatingCombSeekFirstRec(elems.getTail(), length - 1, SList.cons(elems.getHead(), partResult), f);
+                	return nonRepeatingCombSeekFirstRec(elems.tail(), length - 1, SL.cons(elems.head(), partResult), f);
                 }
                 else {
                 	return Optional.empty();
@@ -184,13 +185,13 @@ public class PermComb {
     public static <T> SList<SList<T>> nonRepeatingCombSeekAll(SList<T> elems, int genSize, Predicate<SList<T>> f) {
         if (genSize < 0) throw new IllegalArgumentException("Negative lengths not allowed in nonRepeatingComb...");
         if (genSize > elems.size()) throw new IllegalArgumentException("Lengths over elems.size not allowed in nonRepeatingComb...");
-        return nonRepeatingCombSeekAllRec(elems.reverse(), genSize, new SListNil<T>(), f);
+        return nonRepeatingCombSeekAllRec(elems.reverse(), genSize, SL.empty(), f);
     }
     private static <T> SList<SList<T>> nonRepeatingCombSeekAllRec(SList<T> elems, int length, SList<T> partResult, Predicate<SList<T>> f) {
         if (elems.size() == length) {
         	SList<T> result = elems.reverse().append(partResult);
         	if (f.test(result)) {
-        		return SList.cons(result);
+        		return SL.cons(result);
         	}
         	else {
         		return new SListNil<>();
@@ -198,14 +199,14 @@ public class PermComb {
         }
         else {
             if (!elems.isEmpty()) {
-                SList<SList<T>> result = nonRepeatingCombSeekAllRec(elems.getTail(), length, partResult, f);
+                SList<SList<T>> result = nonRepeatingCombSeekAllRec(elems.tail(), length, partResult, f);
                 if (length > 0) {
-                	result = result.append(nonRepeatingCombSeekAllRec(elems.getTail(), length - 1, SList.cons(elems.getHead(), partResult), f));
+                	result = result.append(nonRepeatingCombSeekAllRec(elems.tail(), length - 1, SL.cons(elems.head(), partResult), f));
                 }
                 return result;
             }
             else {
-            	return new SListNil<>();
+            	return SL.empty();
             }
         }
     }

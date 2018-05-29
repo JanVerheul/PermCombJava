@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import slist.SList;
+import slist.rec.SL;
 import slist.SListNil;
 
 public class SeekerAccu<T> implements Predicate<SList<T>> {
@@ -23,9 +24,9 @@ public class SeekerAccu<T> implements Predicate<SList<T>> {
 	}
 	public boolean test(SList<T> listElem) {
 System.out.println(listElem.toString());		
-        listAccu = SList.cons(listElem, listAccu);
+        listAccu = SL.cons(listElem, listAccu);
         SList<Integer> mapElem = (mapAccu.get(listElem) == null ? new SListNil<Integer>() : mapAccu.get(listElem));
-        mapAccu.put(listElem, SList.cons(counter, mapElem));
+        mapAccu.put(listElem, SL.cons(counter, mapElem));
         counter += 1;
         return target.contains(listElem);
 	}
@@ -39,6 +40,6 @@ System.out.println(listElem.toString());
 		return (mapAccu.get(listElem) == null ? 0 : mapAccu.get(listElem).size());
 	}
 	public int getIndexFirst(SList<T> listElem) {
-		return (mapAccu.get(listElem) == null ? -1 : mapAccu.get(listElem).getHead());
+		return (mapAccu.get(listElem) == null ? -1 : mapAccu.get(listElem).head());
 	}
 }

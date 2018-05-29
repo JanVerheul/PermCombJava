@@ -1,17 +1,19 @@
 package permcombjava;
 
 
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 import slist.SList;
 import slist.SListNil;
+import slist.rec.SL;
 
 
 public class PermCombTester {
 
 	private SList<String> testList1 = new SListNil<String>();
-	private SList<String> testList2 = SList.cons("A", "B", "C", "D", "E", "F", "G");
+	private SList<String> testList2 = SL.cons("A", "B", "C", "D", "E", "F", "G");
 	private Accumulator<String> accumulator = new Accumulator<>();
 
 	@Test
@@ -43,22 +45,22 @@ public class PermCombTester {
         assertEquals(accumulator.getSize(), 49);
         assertEquals(accumulator.getSizeDistinct(), 49);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 1);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 1);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 1);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 1);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
 
         accumulator.clear();
         PermComb.repeatingPerm(testList2, 4, accumulator);
         assertEquals(accumulator.getSize(), 2401);
         assertEquals(accumulator.getSizeDistinct(), 2401);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 1);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 1);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 1);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 1);
 	}
 	
 	@Test
@@ -80,23 +82,23 @@ public class PermCombTester {
         assertEquals(accumulator.getSize(), 42);
         assertEquals(accumulator.getSizeDistinct(), 42);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 1);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 1);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 0);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 1);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 0);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
 
         accumulator.clear();
         PermComb.nonRepeatingPerm(testList2, 4, accumulator);
         assertEquals(accumulator.getSize(), 840);
         assertEquals(accumulator.getSizeDistinct(), 840);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 1);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 1);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 1);
 	}
 
 	@Test
@@ -128,24 +130,24 @@ public class PermCombTester {
         assertEquals(accumulator.getSize(), 28);
         assertEquals(accumulator.getSizeDistinct(), 28);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 1);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 1);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 0);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 1);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 0);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
 
         accumulator.clear();
         PermComb.repeatingComb(testList2, 4, accumulator);
         assertEquals(accumulator.getSize(), 210);
         assertEquals(accumulator.getSizeDistinct(), 210);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 0);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 1);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 1);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 0);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 1);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 1);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
     }
 
 	
@@ -168,24 +170,24 @@ public class PermCombTester {
         assertEquals(accumulator.getSize(), 21);
         assertEquals(accumulator.getSizeDistinct(), 21);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 1);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 0);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 1);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 0);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
 
         accumulator.clear();
         PermComb.nonRepeatingComb(testList2, 4, accumulator);
         assertEquals(accumulator.getSize(), 35);
         assertEquals(accumulator.getSizeDistinct(), 35);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 0);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 1);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 0);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 1);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
     }
 
 	@Test
@@ -207,24 +209,24 @@ public class PermCombTester {
         assertEquals(accumulator.getSize(), 21);
         assertEquals(accumulator.getSizeDistinct(), 21);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 1);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 0);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 1);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 0);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
 
         accumulator.clear();
         PermComb.nonRepeatingComb(testList2, 4, accumulator);
         assertEquals(accumulator.getSize(), 35);
         assertEquals(accumulator.getSizeDistinct(), 35);
         assertEquals(accumulator.getSize(new SListNil<String>()), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B")), 0);
-        assertEquals(accumulator.getSize(SList.cons("B", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "A", "A", "A")), 0);
-        assertEquals(accumulator.getSize(SList.cons("A", "B", "C", "D")), 1);
-        assertEquals(accumulator.getSize(SList.cons("D", "C", "B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B")), 0);
+        assertEquals(accumulator.getSize(SL.cons("B", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "A", "A", "A")), 0);
+        assertEquals(accumulator.getSize(SL.cons("A", "B", "C", "D")), 1);
+        assertEquals(accumulator.getSize(SL.cons("D", "C", "B", "A")), 0);
 
 	}
 	

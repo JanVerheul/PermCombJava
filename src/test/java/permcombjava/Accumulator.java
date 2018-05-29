@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import slist.SList;
+import slist.rec.SL;
 import slist.SListNil;
 
 public class Accumulator<T> implements Consumer<SList<T>> {
@@ -20,10 +21,9 @@ public class Accumulator<T> implements Consumer<SList<T>> {
 		counter = 0;
 	}
 	public void accept(SList<T> listElem) {
-System.out.println(listElem.toString());		
-        listAccu = SList.cons(listElem, listAccu);
-        SList<Integer> mapElem = (mapAccu.get(listElem) == null ? new SListNil<Integer>() : mapAccu.get(listElem));
-        mapAccu.put(listElem, SList.cons(counter, mapElem));
+        listAccu = SL.cons(listElem, listAccu);
+        SList<Integer> mapElem = (mapAccu.get(listElem) == null ? SL.empty() : mapAccu.get(listElem));
+        mapAccu.put(listElem, SL.cons(counter, mapElem));
         counter += 1;
 	}
 	public int getSize() {
@@ -36,6 +36,6 @@ System.out.println(listElem.toString());
 		return (mapAccu.get(listElem) == null ? 0 : mapAccu.get(listElem).size());
 	}
 	public int getIndexFirst(SList<T> listElem) {
-		return (mapAccu.get(listElem) == null ? -1 : mapAccu.get(listElem).getHead());
+		return (mapAccu.get(listElem) == null ? -1 : mapAccu.get(listElem).head());
 	}
 }
