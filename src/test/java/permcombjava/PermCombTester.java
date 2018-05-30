@@ -6,8 +6,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import slist.SList;
-import slist.SListNil;
-import slist.rec.SL;
+import slist.iter.SListNil;
+import slist.iter.SL;
 
 
 public class PermCombTester {

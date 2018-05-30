@@ -1,4 +1,4 @@
-package slist;
+package slist.iter;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import slist.iter.SL;
+import slist.SList;
 import tuple.Tuple2;
 
 public class SListNil<T> implements SList<T> {

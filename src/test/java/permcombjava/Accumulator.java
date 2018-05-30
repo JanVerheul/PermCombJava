@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import slist.SList;
-import slist.rec.SL;
-import slist.SListNil;
+import slist.iter.SL;
+import slist.iter.SListNil;
 
 public class Accumulator<T> implements Consumer<SList<T>> {
     private SList<SList<T>> listAccu;

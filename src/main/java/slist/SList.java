@@ -1,14 +1,11 @@
 package slist;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import slist.rec.SListImpl;
-import slist.SListNil;
 import tuple.Tuple2;
 
 public interface SList<T> extends Iterable<T> {

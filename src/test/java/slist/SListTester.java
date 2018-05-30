@@ -10,6 +10,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import slist.iter.SL;
+import slist.iter.SListNil;
 import slist.iter.SListImpl;
 import tuple.Tuple2;
 

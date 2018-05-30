@@ -8,7 +8,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import slist.SList;
-import slist.SListNil;
 import tuple.Tuple2;
 
 public class SL {

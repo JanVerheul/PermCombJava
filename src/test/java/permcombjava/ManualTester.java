@@ -1,8 +1,8 @@
 package permcombjava;
 
 import slist.SList;
-import slist.rec.SL;
-import slist.SListNil;
+import slist.iter.SL;
+import slist.iter.SListNil;
 
 public class ManualTester {
 

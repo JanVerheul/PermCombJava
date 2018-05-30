@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import slist.SList;
-import slist.rec.SL;
-import slist.SListNil;
+import slist.iter.SL;
+import slist.iter.SListNil;
 
 public class SeekerAccu<T> implements Predicate<SList<T>> {
 	private SList<SList<T>> target;
