@@ -15,10 +15,6 @@ public interface SList<T> extends Iterable<T> {
 	SList<T> tail();
 	T get(int i);
 	
-	/* Fix methods for the implementation of fast iterative utility functions */
-	public void fixHead(T head);
-	public void fixTail(SList<T> tail);
-	
 	/* Inquirers */
 	boolean isEmpty();
 	int size();
@@ -56,10 +52,12 @@ public interface SList<T> extends Iterable<T> {
 	SList<T> merge(SList<T> sList);
 	SList<T> merge(SList<T> sList, Comparator<T> comp);
 	
-	/* Higer Order Workers */
+	/* Higher Order Workers */
 	void forEach(BiConsumer<T, Integer> f);
 	SList<T> filter(Predicate<T> pred);
 	SList<T> filterRev(Predicate<T> pred);
+	SList<T> minBy(Function<T, Integer> f);
+	SList<T> maxBy(Function<T, Integer> f);
 	<R> SList<R> map(Function<T, R> f);
 	<R> SList<R> mapRev(Function<T, R> f);
 	<R> SList<R> map(BiFunction<T, Integer, R> f);
@@ -76,16 +74,17 @@ public interface SList<T> extends Iterable<T> {
 	<R> Tuple2<R, Integer> findMapped(Function<T, R> f, Predicate<R> p);
 
 	/* Set Representation Workers  */
-	SList<T> setRep();
-	SList<T> setRep(Comparator<T> comp);
-	SList<T> setInsertOrdered(T elem);
-	SList<T> setInsertOrdered(T elem, Comparator<T> comp);
-	SList<T> setUnion(SList<T> sList);
-	SList<T> setUnion(SList<T> sList, Comparator<T> comp);
-	SList<T> setIntersect(SList<T> sList);
-	SList<T> setIntersect(SList<T> sList, Comparator<T> comp);
-	SList<T> setMerge(SList<T> sList);
-	SList<T> setMerge(SList<T> sList, Comparator<T> comp);
+	// Sets should have their own distinct container type
+	//	SList<T> setRep();
+	//	SList<T> setRep(Comparator<T> comp);
+	//	SList<T> setInsertOrdered(T elem);
+	//	SList<T> setInsertOrdered(T elem, Comparator<T> comp);
+	//	SList<T> setUnion(SList<T> sList);
+	//	SList<T> setUnion(SList<T> sList, Comparator<T> comp);
+	//	SList<T> setIntersect(SList<T> sList);
+	//	SList<T> setIntersect(SList<T> sList, Comparator<T> comp);
+	//	SList<T> setMerge(SList<T> sList);
+	//	SList<T> setMerge(SList<T> sList, Comparator<T> comp);
 	
 	@Override
 	boolean equals(Object o);

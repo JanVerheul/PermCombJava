@@ -20,13 +20,13 @@ public class SL {
 		SList<T> result = new SListNil<>();
 		return result;
 	}
-	public static <T> SList<T> part(T head) {
+	static <T> SListImpl<T> part(T head) {
 		return new SListImpl<T>(head);
 	}
-	public static <T> SList<T> part(SList<T> tail) {
+	static <T> SListImpl<T> part(SList<T> tail) {
 		return new SListImpl<T>(tail);
 	}
-	public static <T> SList<T> part() {
+	static <T> SListImpl<T> part() {
 		return new SListImpl<T>();
 	}
 	public static <T> SList<T> cons(T head, SList<T> tail) {
@@ -101,58 +101,63 @@ public class SL {
 	/* Extenders */
 	public static <T> SList<T> insertOrdered(SList<T> sList, T elem) {
 		Comparable<T> compElem = (Comparable<T>)elem;
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && compElem.compareTo(sList.head()) > 0) {
-			destWalker.fixTail(SL.part(sList.head()));
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
 			sList = sList.tail();
-			destWalker = destWalker.tail();
+			destWalker = tail;
 		}
 		destWalker.fixTail(SL.cons(elem, sList));
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> insertOrdered(SList<T> sList, T elem, Comparator<T> comp) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && comp.compare(elem, sList.head()) > 0) {
-			destWalker.fixTail(SL.part(sList.head()));
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
 			sList = sList.tail();
-			destWalker = destWalker.tail();
+			destWalker = tail;
 		}
 		destWalker.fixTail(SL.cons(elem, sList));
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> setInsertOrdered(SList<T> sList, T elem) {
 		Comparable<T> compElem = (Comparable<T>)elem;
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && compElem.compareTo(sList.head()) > 0) {
-			destWalker.fixTail(SL.part(sList.head()));
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
 			sList = sList.tail();
-			destWalker = destWalker.tail();
+			destWalker = tail;
 		}
 		if (!sList.isEmpty() && compElem.compareTo(sList.head()) == 0) destWalker.fixTail(sList); 
 		else destWalker.fixTail(SL.cons(elem, sList));
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> setInsertOrdered(SList<T> sList, T elem, Comparator<T> comp) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && comp.compare(elem, sList.head()) > 0) {
-			destWalker.fixTail(SL.part(sList.head()));
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
 			sList = sList.tail();
-			destWalker = destWalker.tail();
+			destWalker = tail;
 		}
 		if (!sList.isEmpty() && comp.compare(elem, sList.head()) == 0) destWalker.fixTail(sList); 
 		else destWalker.fixTail(SL.cons(elem, sList));
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> append(SList<T> sList1, SList<T> sList2) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList1.isEmpty()) {
-			destWalker.fixTail(SL.part(sList1.head()));
-			destWalker = destWalker.tail();
+			SListImpl<T> tail = SL.part(sList1.head());
+			destWalker.fixTail(tail);
+			destWalker = tail;
 			sList1 = sList1.tail();
 		}
 		destWalker.fixTail(sList2);
@@ -161,11 +166,12 @@ public class SL {
 
 	/* Reductors */
 	public static <T> SList<T> removeOne(SList<T> sList, T elem) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && !sList.head().equals(elem)) {
-			destWalker.fixTail(SL.part(sList.head()));
-			destWalker = destWalker.tail();
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
+			destWalker = tail;
 			sList = sList.tail();
 		}
 		if (!sList.isEmpty()) destWalker.fixTail(sList.tail());
@@ -173,11 +179,12 @@ public class SL {
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> removeOne(SList<T> sList, T elem, Comparator<T> comp) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && comp.compare(elem, sList.head()) != 0) {
-			destWalker.fixTail(SL.part(sList.head()));
-			destWalker = destWalker.tail();
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
+			destWalker = tail;
 			sList = sList.tail();
 		}
 		if (!sList.isEmpty()) destWalker.fixTail(sList.tail());
@@ -185,12 +192,13 @@ public class SL {
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> removeAll(SList<T> sList, T elem) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty()) {
 			if (!sList.head().equals(elem)) {
-				destWalker.fixTail(SL.part(sList.head()));
-				destWalker = destWalker.tail();
+				SListImpl<T> tail = SL.part(sList.head());
+				destWalker.fixTail(tail);
+				destWalker = tail;
 			}
 			sList = sList.tail();
 		}
@@ -198,12 +206,13 @@ public class SL {
 		return resultHandle.tail();
 	}
 	public static <T> SList<T> removeAll(SList<T> sList, T elem, Comparator<T> comp) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty()) {
 			if (comp.compare(sList.head(), elem) != 0) {
-				destWalker.fixTail(SL.part(sList.head()));
-				destWalker = destWalker.tail();
+				SListImpl<T> tail = SL.part(sList.head());
+				destWalker.fixTail(tail);
+				destWalker = tail;
 			}
 			sList = sList.tail();
 		}
@@ -347,12 +356,13 @@ public class SL {
 		}
 	}
 	public static <T> SList<T> filter(SList<T> sList, Predicate<T> pred) {
-		SList<T> resultHandle = SL.part();
-		SList<T> destWalker = resultHandle;
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty()) {
 			if (pred.test(sList.head())) {
-				destWalker.fixTail(SL.part(sList.head()));
-				destWalker = destWalker.tail();
+				SListImpl<T> tail = SL.part(sList.head());
+				destWalker.fixTail(tail);
+				destWalker = tail;
 			}
 			sList = sList.tail();
 		}
@@ -369,13 +379,58 @@ public class SL {
 		}
 		return result;
 	}
-	public static <T, R> SList<R> map(SList<T> sList, Function<T, R> f) {
-		SList<R> resultHandle = SL.part();
-		SList<R> destWalker = resultHandle;
-		while (!sList.isEmpty()) {
-			destWalker.fixTail(SL.part(f.apply(sList.head())));
+	public static <T> SList<T> minBy(SList<T> sList, Function<T, Integer> f) {
+		if (sList.isEmpty()) return sList;
+		else {
+			SListBuilder<T> builder = new SListBuilder<>();
+			int min = f.apply(sList.head());
+			builder.add(sList.head());
 			sList = sList.tail();
-			destWalker = destWalker.tail();
+			while (!sList.isEmpty()) {
+				int val = f.apply(sList.head());
+				if (val < min) {
+					builder.build();
+					min = val;
+					builder.add(sList.head());
+				}
+				else if (val == min) {
+					builder.add(sList.head());
+				}
+				sList = sList.tail();
+			}
+			return builder.build();
+		}
+	}
+	public static <T> SList<T> maxBy(SList<T> sList, Function<T, Integer> f) {
+		if (sList.isEmpty()) return sList;
+		else {
+			SListBuilder<T> builder = new SListBuilder<>();
+			int max = f.apply(sList.head());
+			builder.add(sList.head());
+			sList = sList.tail();
+			while (!sList.isEmpty()) {
+				int val = f.apply(sList.head());
+				if (val > max) {
+					builder.build();
+					max = val;
+					builder.add(sList.head());
+				}
+				else if (val == max) {
+					builder.add(sList.head());
+				}
+				sList = sList.tail();
+			}
+			return builder.build();
+		}
+	}
+	public static <T, R> SList<R> map(SList<T> sList, Function<T, R> f) {
+		SListImpl<R> resultHandle = SL.part();
+		SListImpl<R> destWalker = resultHandle;
+		while (!sList.isEmpty()) {
+			SListImpl<R> tail = SL.part(f.apply(sList.head()));
+			destWalker.fixTail(tail);
+			sList = sList.tail();
+			destWalker = tail;
 		}
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
@@ -390,13 +445,14 @@ public class SL {
 	}
 	public static <T, R> SList<R> map(SList<T> sList, BiFunction<T, Integer, R> f) {
 		SList<T> sourceWalker = sList;
-		SList<R> resultHandle = SL.part();
-		SList<R> destWalker = resultHandle;
+		SListImpl<R> resultHandle = SL.part();
+		SListImpl<R> destWalker = resultHandle;
 		int index = 0;
 		while (!sourceWalker.isEmpty()) {
-			destWalker.fixTail(SL.part(f.apply(sourceWalker.head(), index++)));
+			SListImpl<R> tail = SL.part(f.apply(sourceWalker.head(), index++));
+			destWalker.fixTail(tail);
 			sourceWalker = sourceWalker.tail();
-			destWalker = destWalker.tail();
+			destWalker = tail;
 		}
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
@@ -413,13 +469,14 @@ public class SL {
 	public static <T, U, R> SList<R> map2(SList<T> sList1, BiFunction<T, U, R> f, SList<U> sList2) {
 		SList<T> sourceWalker1 = sList1;
 		SList<U> sourceWalker2 = sList2;
-		SList<R> resultHandle = SL.part();
-		SList<R> destWalker = resultHandle;
+		SListImpl<R> resultHandle = SL.part();
+		SListImpl<R> destWalker = resultHandle;
 		while (!sourceWalker1.isEmpty() && !sourceWalker2.isEmpty()) {
-			destWalker.fixTail(SL.part(f.apply(sourceWalker1.head(), sourceWalker2.head())));
+			SListImpl<R> tail = SL.part(f.apply(sourceWalker1.head(), sourceWalker2.head()));
+			destWalker.fixTail(tail);
 			sourceWalker1 = sourceWalker1.tail();
 			sourceWalker2 = sourceWalker2.tail();
-			destWalker = destWalker.tail();
+			destWalker = tail;
 		}
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
@@ -435,15 +492,16 @@ public class SL {
 	}
 	public static <T, R> SList<R> flatMap(SList<T> sList, Function<T, SList<R>> f) {
 		SList<T> sourceWalker = sList;
-		SList<R> resultHandle = SL.part();
-		SList<R> destWalker = resultHandle;
+		SListImpl<R> resultHandle = SL.part();
+		SListImpl<R> destWalker = resultHandle;
 		while (!sourceWalker.isEmpty()) {
 			SList<R> partRes = f.apply(sourceWalker.head());
 			SList<R> partResWalker = partRes;
 			while (!partResWalker.isEmpty()) {
-				destWalker.fixTail(SL.part(partResWalker.head()));
+				SListImpl<R> tail = SL.part(partResWalker.head());
+				destWalker.fixTail(tail);
 				partResWalker = partResWalker.tail();
-				destWalker = destWalker.tail();
+				destWalker = tail;
 			}
 			sourceWalker = sourceWalker.tail();
 		}
@@ -553,6 +611,39 @@ public class SL {
 			walker = walker.tail();
 		}
 		return result;
+	}
+	
+	public static class SListBuilder<T> {
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
+		public SListBuilder<T> add(T elem) {
+			SListImpl<T> tail = SL.part(elem);
+			destWalker.fixTail(tail);
+			destWalker = tail;
+			return this;
+		}
+		public SList<T> build() {
+			destWalker.fixTail(SL.empty());
+			SList<T> result = resultHandle.tail();
+			resultHandle = SL.part();
+			destWalker = resultHandle;
+			return result;
+			
+		}
+	}
+	
+	public static class SListRevBuilder<T> {
+		SList<T> accu = SL.empty();
+		public SListRevBuilder<T> add(T elem) {
+			accu = accu.push(elem);
+			return this;
+		}
+		public SList<T> build() {
+			SList<T> result = accu;
+			accu = SL.empty();
+			return result;
+		}
+		
 	}
 
 }

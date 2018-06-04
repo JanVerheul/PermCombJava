@@ -34,7 +34,7 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 		this.tail = null;
 	}
 
-	/* Getters; no Setters to enforce immutability */
+	/* Getters; no public Setters to enforce immutability */
 	public T head() { return head; }
 	public SList<T> tail() { return tail; }
 	public T get(int i) {
@@ -46,12 +46,12 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 		return new SListImplIterator();
 	}
 	
-	/* One time fix methods for the implementation of fast iterative algorithms */
-	public void fixHead(T head) {
+	/* One time package scope fix methods for the implementation of fast iterative algorithms */
+	void fixHead(T head) {
 		if (this.head == null) this.head = head;
 		else throw new UnsupportedOperationException("Change of a fixed head not allowed...");
 	}
-	public void fixTail(SList<T> tail) {
+	void fixTail(SList<T> tail) {
 		if (this.tail == null) this.tail = tail;
 		else throw new UnsupportedOperationException("Change of a fixed tail not allowed...");
 	}
@@ -164,6 +164,12 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 	public SList<T> filterRev(Predicate<T> pred) {
 		return SL.filterRev(this, pred);
 	}
+	public SList<T> minBy(Function<T, Integer> f) {
+		return SL.minBy(this, f);
+	}
+	public SList<T> maxBy(Function<T, Integer> f) {
+		return SL.maxBy(this, f);
+	}
 	public <R> SList<R> map(Function<T, R> f) {
 		return SL.map(this, f);
 	}
@@ -209,36 +215,39 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 
 
 	/* Set Representation Workers */
-	public SList<T> setRep() {
-		return SL.setRep(this);
-	}
-	public SList<T> setInsertOrdered(T elem) {
-		return SL.setInsertOrdered(this, elem);
-	}
-	public SList<T> setUnion(SList<T> sList) {
-		return SL.setUnion(this, sList);
-	}
-	public SList<T> setIntersect(SList<T> sList) {
-		return SL.setIntersect(this, sList);
-	}
-	public SList<T> setMerge(SList<T> sList) {
-		return SL.setMerge(this, sList);
-	}
-	public SList<T> setRep(Comparator<T> comp) {
-		return SL.setRep(this, comp);
-	}
-	public SList<T> setInsertOrdered(T elem, Comparator<T> comp) {
-		return SL.setInsertOrdered(this, elem, comp);
-	}
-	public SList<T> setUnion(SList<T> sList, Comparator<T> comp) {
-		return SL.setUnion(this, sList, comp);
-	}
-	public SList<T> setIntersect(SList<T> sList, Comparator<T> comp) {
-		return SL.setIntersect(this, sList, comp);
-	}
-	public SList<T> setMerge(SList<T> sList, Comparator<T> comp) {
-		return SL.setMerge(this, sList, comp);
-	}
+	
+	// A set should have its own container type. This can have a singly linked list
+	// as underlying representation but it should be distinguishable on container type
+	//	public SList<T> setRep() {
+	//		return SL.setRep(this);
+	//	}
+	//	public SList<T> setInsertOrdered(T elem) {
+	//		return SL.setInsertOrdered(this, elem);
+	//	}
+	//	public SList<T> setUnion(SList<T> sList) {
+	//		return SL.setUnion(this, sList);
+	//	}
+	//	public SList<T> setIntersect(SList<T> sList) {
+	//		return SL.setIntersect(this, sList);
+	//	}
+	//	public SList<T> setMerge(SList<T> sList) {
+	//		return SL.setMerge(this, sList);
+	//	}
+	//	public SList<T> setRep(Comparator<T> comp) {
+	//		return SL.setRep(this, comp);
+	//	}
+	//	public SList<T> setInsertOrdered(T elem, Comparator<T> comp) {
+	//		return SL.setInsertOrdered(this, elem, comp);
+	//	}
+	//	public SList<T> setUnion(SList<T> sList, Comparator<T> comp) {
+	//		return SL.setUnion(this, sList, comp);
+	//	}
+	//	public SList<T> setIntersect(SList<T> sList, Comparator<T> comp) {
+	//		return SL.setIntersect(this, sList, comp);
+	//	}
+	//	public SList<T> setMerge(SList<T> sList, Comparator<T> comp) {
+	//		return SL.setMerge(this, sList, comp);
+	//	}
 	
 
 	private class SListImplIterator implements Iterator<T> {

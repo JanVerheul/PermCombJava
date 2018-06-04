@@ -554,6 +554,25 @@ public class SListTester {
 	}
 	
 	@Test
+	public void testMinBy() {
+		SList<Integer> LL1 = SL.cons(2, 4, 5, 1, 4, 5, 3, 2, 1);
+		assertEquals(LL1.minBy((elem) -> elem), SL.cons(1, 1));
+		SList<Integer> LL2 = SL.cons(2, 4, 5, 1, 0, 5, 3, 2, 1);
+		assertEquals(LL2.minBy((elem) -> elem), SL.cons(0));
+		SList<String> LL3 = SL.cons("A", "BB", "CCC", "XXX", "FF", "Y", "OOO", "C", "PP");
+		assertEquals(LL3.minBy((elem) -> elem.length()), SL.cons("A", "Y", "C"));
+	}
+	@Test
+	public void testMaxBy() {
+		SList<Integer> LL1 = SL.cons(2, 4, 5, 1, 4, 5, 3, 2, 1);
+		assertEquals(LL1.maxBy((elem) -> elem), SL.cons(5, 5));
+		SList<Integer> LL2 = SL.cons(2, 4, 5, 1, 6, 5, 3, 2, 1);
+		assertEquals(LL2.maxBy((elem) -> elem), SL.cons(6));
+		SList<String> LL3 = SL.cons("A", "BB", "CCC", "XXX", "FF", "Y", "OOO", "C", "PP");
+		assertEquals(LL3.maxBy((elem) -> elem.length()), SL.cons("CCC", "XXX", "OOO"));
+	}
+	
+	@Test
 	public void testMap() {
 		final String[] aas = { "", "A", "AA", "AAA", "AAAA", "AAAAA", "AAAAAA", "AAAAAAA", "AAAAAAAA" };
 		SList<Integer> LL1 = SL.cons(1, 3, 5, 7, 9);
@@ -640,47 +659,28 @@ public class SListTester {
 	public void testFindMapped() {
 	}
 
-	/* Set Representation Workers  */
-	@Test
-	public void testSetRep() {
-		// TODO
-	}
-	@Test
-	public void testSetRepComparator() {
-		// TODO
-	}
-	@Test
-	public void testSetInsertOrdered() {
-		// TODO
-	}
-	@Test
-	public void testSetInsertOrderedComparator() {
-		// TODO
-	}
-	@Test
-	public void testSetUnion() {
-		// TODO
-	}
-	@Test
-	public void testSetUnionComparator() {
-		// TODO
-	}
-	@Test
-	public void testsetIntersect() {
-		// TODO
-	}
-	@Test
-	public void testSetIntersectComparator() {
-	}
-	@Test
-	public void testSetMerge() {
-		// TODO
-	}
-	@Test
-	public void testSetMergeComparator() {
-		// TODO
-	}
 
+	@Test
+	public void testSListBuilder() {
+		SL.SListBuilder<Integer> builder = new SL.SListBuilder<>();
+		builder.add(0).add(2).add(4).add(6).add(8);
+		assertEquals(builder.build(), SL.cons(0, 2, 4, 6, 8));
+		builder.add(13);
+		assertEquals(builder.build(), SL.single(13));
+		assertEquals(builder.build(), SL.empty());
+	}
+	
+	@Test
+	public void testSListRevBuilder() {
+		SL.SListRevBuilder<Integer> builder = new SL.SListRevBuilder<>();
+		builder.add(0).add(2).add(4).add(6).add(8);
+		assertEquals(builder.build(), SL.cons(8, 6, 4, 2, 0));
+		builder.add(13);
+		assertEquals(builder.build(), SL.single(13));
+		assertEquals(builder.build(), SL.empty());
+	}
+	
+	
 	
 	@Test
 	public void testEquals() {
