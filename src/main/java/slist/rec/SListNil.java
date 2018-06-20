@@ -137,6 +137,12 @@ public class SListNil<T> implements SList<T> {
 	public SList<T> filterRev(Predicate<T> pred) {
 		return SL.empty();
 	}
+	public SList<T> minBy(Function<T, Integer> f) {
+		return SL.empty();
+	}
+	public SList<T> maxBy(Function<T, Integer> f) {
+		return SL.empty();
+	}
 	public <R> SList<R> map(Function<T, R> f) {
 		return SL.empty();
 	}

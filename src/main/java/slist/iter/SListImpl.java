@@ -13,23 +13,23 @@ import tuple.Tuple2;
 public class SListImpl<T> implements SList<T>, Iterable<T> {
 
 	/* Private data */
-	public T head;
-	public SList<T> tail;
+	private T head;
+	private SList<T> tail;
 
 	/* Constructors */
 	public SListImpl(T head, SList<T> tail) {
 		this.head = head;
 		this.tail = tail;
 	}
-	public SListImpl(T head) {
+	SListImpl(T head) {
 		this.head = head;
 		this.tail = null;
 	}
-	public SListImpl(SList<T> tail) {
+	SListImpl(SList<T> tail) {
 		this.head = null;
 		this.tail = tail;
 	}
-	public SListImpl() {
+	SListImpl() {
 		this.head = null;
 		this.tail = null;
 	}
@@ -39,8 +39,9 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 	public SList<T> tail() { return tail; }
 	public T get(int i) {
 		if (i < 0) throw new IllegalArgumentException("Negative indexes not allowed in SL.get()...");
-		if (i == 0) return head;
-		else return tail.get(i - 1);
+		return SL.get(this, i);
+		//if (i == 0) return head;
+		//else return tail.get(i - 1);
 	}
 	public Iterator<T> iterator() {
 		return new SListImplIterator();
@@ -61,8 +62,9 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 		return false;
 	}
 	public int size() {
-		if (tail.isEmpty()) return 1;
-		else return 1 + tail.size();
+		return SL.size(this);
+		//		if (tail.isEmpty()) return 1;
+		//		else return 1 + tail.size();
 	}
 	public boolean contains(T elem) {
 		return SL.contains(this,  elem);
@@ -93,12 +95,14 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 
 	/* Reductors */
 	public SList<T> drop(int n) {
-		if (n == 0) return this;
-		else return tail.drop(n - 1);
+		return SL.drop(this, n);
+		//		if (n == 0) return this;
+		//		else return tail.drop(n - 1);
 	}
 	public SList<T> take(int n) {
-		if (n == 0 || size() == 0) return SL.empty();
-		else return new SListImpl<T>(head, tail.take(n - 1));
+		return SL.take(this, n);
+		//if (n == 0 || size() == 0) return SL.empty();
+		//else return new SListImpl<T>(head, tail.take(n - 1));
 	}
 	public SList<T> slice(int m, int n) {
 		return take(n).drop(m);
@@ -213,42 +217,6 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 		return SL.findMapped(this, f, p);
 	}
 
-
-	/* Set Representation Workers */
-	
-	// A set should have its own container type. This can have a singly linked list
-	// as underlying representation but it should be distinguishable on container type
-	//	public SList<T> setRep() {
-	//		return SL.setRep(this);
-	//	}
-	//	public SList<T> setInsertOrdered(T elem) {
-	//		return SL.setInsertOrdered(this, elem);
-	//	}
-	//	public SList<T> setUnion(SList<T> sList) {
-	//		return SL.setUnion(this, sList);
-	//	}
-	//	public SList<T> setIntersect(SList<T> sList) {
-	//		return SL.setIntersect(this, sList);
-	//	}
-	//	public SList<T> setMerge(SList<T> sList) {
-	//		return SL.setMerge(this, sList);
-	//	}
-	//	public SList<T> setRep(Comparator<T> comp) {
-	//		return SL.setRep(this, comp);
-	//	}
-	//	public SList<T> setInsertOrdered(T elem, Comparator<T> comp) {
-	//		return SL.setInsertOrdered(this, elem, comp);
-	//	}
-	//	public SList<T> setUnion(SList<T> sList, Comparator<T> comp) {
-	//		return SL.setUnion(this, sList, comp);
-	//	}
-	//	public SList<T> setIntersect(SList<T> sList, Comparator<T> comp) {
-	//		return SL.setIntersect(this, sList, comp);
-	//	}
-	//	public SList<T> setMerge(SList<T> sList, Comparator<T> comp) {
-	//		return SL.setMerge(this, sList, comp);
-	//	}
-	
 
 	private class SListImplIterator implements Iterator<T> {
 		private SList<T> walker;

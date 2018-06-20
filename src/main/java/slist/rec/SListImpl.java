@@ -147,6 +147,12 @@ public class SListImpl<T> implements SList<T>, Iterable<T> {
 	public SList<T> filterRev(Predicate<T> pred) {
 		return SL.filterRev(this, pred);
 	}
+	public SList<T> minBy(Function<T, Integer> f) {
+		return SL.empty(); // TODO
+	}
+	public SList<T> maxBy(Function<T, Integer> f) {
+		return SL.empty(); // TODO
+	}
 	public <R> SList<R> map(Function<T, R> f) {
 		return SL.map(this, f);
 	}

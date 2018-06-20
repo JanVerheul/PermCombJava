@@ -379,8 +379,6 @@ public class SListTester {
 		assertEquals(LL1.removeAll(88), SL.cons(2, 5, 8, 22, 22, 55));
 		assertEquals(LL1.removeAll(44), SL.cons(2, 5, 8, 22, 22, 55, 88, 88, 88));
 		assertEquals(L1.removeAll(44), L1);
-		
-		
 	}
 	@Test
 	public void testRemoveListOne() {
@@ -541,6 +539,13 @@ public class SListTester {
 		StringBuilder sb = new StringBuilder();
 		L4.forEach((elem) -> sb.append(elem));
 		assertEquals(sb.toString(), "1234");
+		L0.forEach((elem) -> assertTrue(false));
+	}
+	@Test
+	public void testForEachIndex() {
+		StringBuilder sb = new StringBuilder();
+		L4.forEach((elem, index) -> sb.append(elem).append(index));
+		assertEquals(sb.toString(), "10213243");
 		L0.forEach((elem) -> assertTrue(false));
 	}
 	@Test
@@ -753,8 +758,6 @@ public class SListTester {
 		assertTrue(l5.toString().equals(l6.toString()));
 		assertTrue(l7.toString().equals("SList(SList(AA, BB, CC), SList(AA, CC, EE), SList(AA, MM, YY))"));
 	}
-	
-	
 	
 	@Test
 	// will not run with very long lists because the Java compiler does no tail call optimization

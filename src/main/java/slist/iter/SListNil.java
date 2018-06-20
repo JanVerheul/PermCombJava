@@ -19,6 +19,9 @@ public class SListNil<T> implements SList<T> {
 	public SList<T> tail() {
 		throw new UnsupportedOperationException("tail() not allowed on empty SL...");
 	}
+	public T get(int i) {
+		throw new IllegalArgumentException("Index out of bounds in SL.get()...");
+	}
 
 	/* Setters only for the implementation of fast iterative utility functions */
 	public void fixHead(T head) {
@@ -35,9 +38,6 @@ public class SListNil<T> implements SList<T> {
 	}
 	public int size() {
 		return 0;
-	}
-	public T get(int i) {
-		throw new IllegalArgumentException("Index out of bounds in SL.get()...");
 	}
 	public boolean contains(T elem) {
 		return false;

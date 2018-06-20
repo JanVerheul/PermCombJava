@@ -171,11 +171,6 @@ public class SL {
 	}
 
 	
-	
-	
-	
-	
-	
 	/* Mutators */
 	static <T> SList<T> reverse(SList<T> sList) {
 		return reverseTailRec(sList, empty());

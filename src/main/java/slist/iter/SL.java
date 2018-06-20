@@ -68,7 +68,25 @@ public class SL {
 	
 	/* Static worker methods */
 	
+	/* Getters */
+	public static <T> T get(SList<T> sList, int i) {
+		while (!sList.isEmpty() && i > 0) {
+			sList = sList.tail();
+			i -= 1;
+		}
+		if (sList.isEmpty() || i > 0) throw new IllegalArgumentException("Index out of bounds in SL.get()...");
+		return sList.head();
+	}
+	
 	/* Inquirers */
+	public static <T> int size(SList<T> sList) {
+		int result = 0;
+		while (!sList.isEmpty()) {
+			sList = sList.tail();
+			result += 1;
+		}
+		return result;
+	}
 	public static <T> boolean contains(SList<T> sList, T elem) {
 		while (!sList.isEmpty()) {
 			if (elem.equals(sList.head())) return true;
@@ -165,6 +183,26 @@ public class SL {
 	}
 
 	/* Reductors */
+	public static <T> SList<T> drop(SList<T> sList, int n) {
+		while (n != 0) {
+			sList = sList.tail();
+			n -= 1;
+		}
+		return sList;
+	}
+	public static <T> SList<T> take(SList<T> sList, int n) {
+		SListImpl<T> resultHandle = SL.part();
+		SListImpl<T> destWalker = resultHandle;
+		while (!sList.isEmpty() && n > 0) {
+			SListImpl<T> tail = SL.part(sList.head());
+			destWalker.fixTail(tail);
+			destWalker = tail;
+			sList = sList.tail();
+			n -= 1;
+		}
+		destWalker.fixTail(SL.empty());
+		return resultHandle.tail();
+	}
 	public static <T> SList<T> removeOne(SList<T> sList, T elem) {
 		SListImpl<T> resultHandle = SL.part();
 		SListImpl<T> destWalker = resultHandle;
@@ -353,6 +391,7 @@ public class SL {
 		int index = 0;
 		while (!sList.isEmpty()) {
 			f.accept(sList.head(), index++);
+			sList = sList.tail();
 		}
 	}
 	public static <T> SList<T> filter(SList<T> sList, Predicate<T> pred) {
@@ -536,34 +575,6 @@ public class SL {
 		return partRes;
 	}
 
-
-	/* Set Representation Workers  */
-	public static <T> SList<T> setRep(SList<T> sList) {
-		return sList.sort().remDoublesSorted();
-	}
-	public static <T> SList<T> setRep(SList<T> sList, Comparator<T> comp) {
-		return sList.sort(comp).remDoublesSorted(comp);
-	}
-	public static <T> SList<T> setUnion(SList<T> sList1, SList<T> sList2) {
-		return setMerge(sList1, sList2);
-	}
-	
-	public static <T> SList<T> setUnion(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
-		return setMerge(sList1, sList2, comp);
-	}
-	public static <T> SList<T> intersect(SList<T> sList1, SList<T> sList2) {
-		return null;
-	}
-	public static <T> SList<T> intersect(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
-		return null;
-	}
-	public static <T> SList<T> setIntersect(SList<T> sList1, SList<T> sList2) {
-		return null;
-	}
-	public static <T> SList<T> setIntersect(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
-		return null;
-	}
-
 	public static <T> Tuple2<T, Integer> find(SList<T> sList, Predicate<T> pred) {
 		return SL.findImpl(sList, pred, 0);
 	}
@@ -603,6 +614,7 @@ public class SL {
 	}
 
 	/* Helpers */
+
 	public static <T> SList<T> completeResult(SList<T> revPref, SList<T> partRes) {
 		SList<T> result = partRes;
 		SList<T> walker = revPref;
