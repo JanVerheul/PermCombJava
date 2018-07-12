@@ -66,7 +66,7 @@ public class SL {
 		else if (sList.head().equals(elem)) return true;
 		else return contains(sList.tail(), elem);
 	}
-	static <T> boolean contains(SList<T> sList, T elem, Comparator<T> comp) {
+	static <T> boolean contains(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return false;
 		else if (comp.compare(sList.head(), elem) == 0) return true;
 		else return contains(sList.tail(), elem);
@@ -75,7 +75,7 @@ public class SL {
 		if (sList2.isEmpty()) return true;
 		else return contains(sList1, sList2.head()) && containsList(sList1, sList2.tail());
 	}
-	static <T> boolean containsList(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	static <T> boolean containsList(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList2.isEmpty()) return true;
 		else return contains(sList1, sList2.head(), comp) && containsList(sList1, sList2.tail(), comp);
 	}
@@ -87,7 +87,7 @@ public class SL {
 		else if (compElem.compareTo(sList.head()) <= 0) return new SListImpl<T>(elem, sList);
 		else return new SListImpl<T>(sList.head(), SL.insertOrdered(sList.tail(), elem));
 	}
-	static <T> SList<T> insertOrdered(SList<T> sList, T elem, Comparator<T> comp) {
+	static <T> SList<T> insertOrdered(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return SL.single(elem);
 		else if (comp.compare(elem, sList.head()) <= 0) return new SListImpl<T>(elem, sList);
 		else return new SListImpl<T>(sList.head(), SL.insertOrdered(sList.tail(), elem, comp));
@@ -99,7 +99,7 @@ public class SL {
 		else if (compElem.compareTo(sList.head()) < 0) return new SListImpl<T>(elem, sList);
 		else return new SListImpl<T>(sList.head(), SL.insertOrdered(sList.tail(), elem));
 	}
-	static <T> SList<T> setInsertOrdered(SList<T> sList, T elem, Comparator<T> comp) {
+	static <T> SList<T> setInsertOrdered(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return SL.single(elem);
 		else if (comp.compare(elem, sList.head()) == 0) return sList;
 		else if (comp.compare(elem, sList.head()) < 0) return new SListImpl<T>(elem, sList);
@@ -116,7 +116,7 @@ public class SL {
 		else if (elem.equals(sList.head())) return sList.tail();
 		else return new SListImpl<T>(sList.head(), SL.removeOne(sList.tail(), elem));
 	}
-	static <T> SList<T> removeOne(SList<T> sList, T elem, Comparator<T> comp) {
+	static <T> SList<T> removeOne(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return sList;
 		else if (comp.compare(elem, sList.head()) == 0) return sList.tail();
 		else return new SListImpl<T>(sList.head(), SL.removeOne(sList.tail(), elem, comp));
@@ -126,7 +126,7 @@ public class SL {
 		else if (elem.equals(sList.head())) return SL.removeAll(sList.tail(), elem);
 		else return new SListImpl<T>(sList.head(), SL.removeAll(sList.tail(), elem));
 	}
-	static <T> SList<T> removeAll(SList<T> sList, T elem, Comparator<T> comp) {
+	static <T> SList<T> removeAll(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return sList;
 		else if (comp.compare(elem, sList.head()) == 0) return SL.removeAll(sList.tail(), elem);
 		else return new SListImpl<T>(sList.head(), SL.removeAll(sList.tail(), elem, comp));
@@ -135,7 +135,7 @@ public class SL {
 		if (sList2.isEmpty()) return sList1;
 		else return SL.removeOne(SL.removeListOne(sList1, sList2.tail()), sList2.head());
 	}
-	static <T> SList<T> removeListOne(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	static <T> SList<T> removeListOne(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList2.isEmpty()) return sList1;
 		else return SL.removeOne(SL.removeListOne(sList1, sList2.tail(), comp), sList2.head());
 	}
@@ -143,7 +143,7 @@ public class SL {
 		if (sList2.isEmpty()) return sList1;
 		else return SL.removeAll(SL.removeListAll(sList1, sList2.tail()), sList2.head());
 	}
-	static <T> SList<T> removeListAll(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	static <T> SList<T> removeListAll(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList2.isEmpty()) return sList1;
 		else return SL.removeAll(SL.removeListAll(sList1, sList2.tail(), comp), sList2.head());
 	}
@@ -160,11 +160,11 @@ public class SL {
 		else if (elem.equals(sList.head())) return remDoublesSortedImpl(sList.tail(), elem);
 		else return SL.cons(elem, remDoublesSortedImpl(sList.tail(), sList.head()));
 	}
-	static <T> SList<T> remDoublesSorted(SList<T> sList, Comparator<T> comp) {
+	static <T> SList<T> remDoublesSorted(SList<T> sList, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return sList;
 		else return SL.remDoublesSortedImpl(sList.tail(), sList.head(), comp);
 	}
-	static <T> SList<T> remDoublesSortedImpl(SList<T> sList, T elem, Comparator<T> comp) {
+	static <T> SList<T> remDoublesSortedImpl(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return SL.single(elem);
 		else if (comp.compare(sList.head(), elem) == 0) return remDoublesSortedImpl(sList.tail(), elem, comp);
 		else return SL.cons(elem, remDoublesSortedImpl(sList.tail(), sList.head(), comp));
@@ -215,12 +215,12 @@ public class SL {
 			else return SL.cons(head2, SL.setMerge(sList1, sList2.tail()));
 		}
 	}
-	static <T> SList<T> sort(SList<T> sList, Comparator<T> comp) {
+	static <T> SList<T> sort(SList<T> sList, Comparator<? super T> comp) {
 		int length = sList.size();
 		if (length > 1)	return mergeSort(sList, 0, length, comp);
 		else return sList;
 	}
-	static <T> SList<T> mergeSort(SList<T> sList, int lowerInc, int upperEx, Comparator<T> comp) {
+	static <T> SList<T> mergeSort(SList<T> sList, int lowerInc, int upperEx, Comparator<? super T> comp) {
 		int halfWay = (lowerInc + upperEx) / 2;
 		SList<T> lowerPart;
 		SList<T> upperPart;
@@ -230,7 +230,7 @@ public class SL {
 		else upperPart = mergeSort(sList, halfWay, upperEx, comp);
 		return merge(lowerPart, upperPart, comp);
 	}
-	static <T> SList<T> merge(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	static <T> SList<T> merge(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList1.isEmpty()) return sList2;
 		else if (sList2.isEmpty()) return sList1;
 		else {
@@ -238,7 +238,7 @@ public class SL {
 			else return SL.cons(sList2.head(), merge(sList1, sList2.tail(), comp)); 
 		}
 	}
-	static <T> SList<T> setMerge(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	static <T> SList<T> setMerge(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList1.isEmpty()) return sList2;
 		else if (sList2.isEmpty()) return sList1;
 		else {
@@ -249,80 +249,80 @@ public class SL {
 	}
 	
 	/* Higher Order Workers */
-	static <T> void forEach(SList<T> sList, BiConsumer<T,Integer> f) {
+	static <T> void forEach(SList<T> sList, BiConsumer<? super T, Integer> f) {
 		SL.forEachImpl(sList, f, 0);
 	}
-	static <T> void forEachImpl(SList<T> sList, BiConsumer<T,Integer> f, Integer i) {
+	static <T> void forEachImpl(SList<T> sList, BiConsumer<? super T, Integer> f, Integer i) {
 		if (!sList.isEmpty()) {
 			f.accept(sList.head(), i);
 			forEachImpl(sList.tail(), f, i + 1);
 		}
 	}
-	static <T> SList<T> filter(SList<T> sList, Predicate<T> pred) {
+	static <T> SList<T> filter(SList<T> sList, Predicate<? super T> pred) {
 		if (sList.isEmpty()) return sList;
 		else if (pred.test(sList.head())) return SL.cons(sList.head(), filter(sList.tail(), pred));
 		else return filter(sList.tail(), pred);
 	}
-	static <T> SList<T> filterRev(SList<T> sList, Predicate<T> pred) {
+	static <T> SList<T> filterRev(SList<T> sList, Predicate<? super T> pred) {
 		return filterRevImpl(sList, pred, SL.empty());
 	}
-	static <T> SList<T> filterRevImpl(SList<T> sList, Predicate<T> pred, SList<T> partRes) {
+	static <T> SList<T> filterRevImpl(SList<T> sList, Predicate<? super T> pred, SList<T> partRes) {
 		if (sList.isEmpty()) return partRes;
 		else if (pred.test(sList.head())) return filterRevImpl(sList.tail(), pred, SL.cons(sList.head(), partRes));
 		else return filterRevImpl(sList.tail(), pred, partRes);
 	}
-	static <T, R> SList<R> map(SList<T> sList, Function<T, R> f) {
+	static <T, R> SList<R> map(SList<T> sList, Function<? super T, ? extends R> f) {
 		if (sList.isEmpty()) return SL.empty();
 		else return SL.cons(f.apply(sList.head()), map(sList.tail(), f));
 	}
-	static <T, R> SList<R> mapRev(SList<T> sList, Function<T, R> f) {
+	static <T, R> SList<R> mapRev(SList<T> sList, Function<? super T, ? extends R> f) {
 		return mapRevImpl(sList, f, SL.empty());
 	}
-	static <T, R> SList<R> mapRevImpl(SList<T> sList, Function<T, R> f, SList<R> partRes) {
+	static <T, R> SList<R> mapRevImpl(SList<T> sList, Function<? super T, ? extends R> f, SList<R> partRes) {
 		if (sList.isEmpty()) return partRes;
 		else return mapRevImpl(sList.tail(), f, SL.cons(f.apply(sList.head()), partRes));
 	}
-	static <T, R> SList<R> map(SList<T> sList, BiFunction<T, Integer, R> f) {
+	static <T, R> SList<R> map(SList<T> sList, BiFunction<? super T, Integer, ? extends R> f) {
 		return mapImpl(sList, f, 0);
 	}
-	static <T, R> SList<R> mapImpl(SList<T> sList, BiFunction<T, Integer, R> f, Integer index) {
+	static <T, R> SList<R> mapImpl(SList<T> sList, BiFunction<? super T, Integer, ? extends R> f, Integer index) {
 		if (sList.isEmpty()) return SL.empty();
 		else return SL.cons(f.apply(sList.head(), index), mapImpl(sList.tail(), f, index + 1));
 	}
-	static <T, R> SList<R> mapRev(SList<T> sList, BiFunction<T, Integer, R> f) {
+	static <T, R> SList<R> mapRev(SList<T> sList, BiFunction<? super T, Integer, ? extends R> f) {
 		return mapRevImpl(sList, f, 0, SL.empty());
 	}
-	static <T, R> SList<R> mapRevImpl(SList<T> sList, BiFunction<T, Integer, R> f, Integer index, SList<R> partRes) {
+	static <T, R> SList<R> mapRevImpl(SList<T> sList, BiFunction<? super T, Integer, ? extends R> f, Integer index, SList<R> partRes) {
 		if (sList.isEmpty()) return partRes;
 		else return mapRevImpl(sList.tail(), f, index + 1, SL.cons(f.apply(sList.head(), index), partRes));
 	}
-	static <T, U, R> SList<R> map2(SList<T> sList1, BiFunction<T, U, R> f, SList<U> sList2) {
+	static <T, U, R> SList<R> map2(SList<T> sList1, BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList2) {
 		if (sList1.isEmpty() || sList2.isEmpty()) return SL.empty();
 		else return SL.cons(f.apply(sList1.head(), sList2.head()), map2(sList1.tail(), f, sList2.tail()));
 	}
-	static <T, U, R> SList<R> map2Rev(SList<T> sList1, BiFunction<T, U, R> f, SList<U> sList2) {
+	static <T, U, R> SList<R> map2Rev(SList<T> sList1, BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList2) {
 		return map2RevImpl(sList1, f, sList2, SL.empty());
 	}
-	static <T, U, R> SList<R> map2RevImpl(SList<T> sList1, BiFunction<T, U, R> f, SList<U> sList2, SList<R> partRes) {
+	static <T, U, R> SList<R> map2RevImpl(SList<T> sList1, BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList2, SList<R> partRes) {
 		if (sList1.isEmpty() || sList2.isEmpty()) return partRes;
 		else return map2RevImpl(sList1.tail(), f, sList2.tail(), SL.cons(f.apply(sList1.head(), sList2.head()), partRes));
 	}
-	static <T, R> SList<R> flatMap(SList<T> sList, Function<T, SList<R>> f) {
+	static <T, R> SList<R> flatMap(SList<T> sList, Function<? super T, ? extends SList<R>> f) {
 		if (sList.isEmpty()) return new SListNil<R>();
 		else return SL.append(f.apply(sList.head()), flatMap(sList.tail(), f));
 	}
-	static <T, R> SList<R> flatMapRev(SList<T> sList, Function<T, SList<R>> f) {
+	static <T, R> SList<R> flatMapRev(SList<T> sList, Function<? super T, ? extends SList<R>> f) {
 		return flatMapRevImpl(sList, f, SL.empty());
 	}
-	static <T, R> SList<R> flatMapRevImpl(SList<T> sList, Function<T, SList<R>> f, SList<R> partRes) {
+	static <T, R> SList<R> flatMapRevImpl(SList<T> sList, Function<? super T, ? extends SList<R>> f, SList<R> partRes) {
 		if (sList.isEmpty()) return partRes;
 		else return flatMapRevImpl(sList.tail(), f, SL.append(f.apply(sList.head()), partRes));
 	}
-	static <T, R> R foldLeft(SList<T> sList, BiFunction<R, T, R> f, R partResult) {
+	static <T, R> R foldLeft(SList<T> sList, BiFunction<R, ? super T, R> f, R partResult) {
 		if (sList.isEmpty()) return partResult;
 		else return foldLeft(sList.tail(), f, f.apply(partResult, sList.head())); 
 	}
-	static <T, R> R foldRight(SList<T> sList, BiFunction<T, R, R> f, R initVal) {
+	static <T, R> R foldRight(SList<T> sList, BiFunction<? super T, R, R> f, R initVal) {
 		if (sList.isEmpty()) return initVal;
 		else return f.apply(sList.head(), foldRight(sList.tail(), f, initVal));
 	}
@@ -355,18 +355,18 @@ public class SL {
 		return null;
 	}
 
-	static <T> Tuple2<T, Integer> find(SList<T> sList, Predicate<T> pred) {
+	static <T> Tuple2<T, Integer> find(SList<T> sList, Predicate<? super T> pred) {
 		return SL.findImpl(sList, pred, 0);
 	}
-	static <T> Tuple2<T, Integer> findImpl(SList<T> sList, Predicate<T> pred, Integer i) {
+	static <T> Tuple2<T, Integer> findImpl(SList<T> sList, Predicate<? super T> pred, Integer i) {
 		if (sList.isEmpty()) return new Tuple2<T, Integer>(null, -1);
 		else if (pred.test(sList.head())) return new Tuple2<T, Integer>(sList.head(), i);
 		else return findImpl(sList.tail(), pred, i + 1);
 	}
-	static <T, R> Tuple2<R, Integer> findMapped(SList<T> sList, Function<T, R> f, Predicate<R> pred) {
+	static <T, R> Tuple2<R, Integer> findMapped(SList<T> sList, Function<T, R> f, Predicate<? super R> pred) {
 		return SL.findMappedImpl(sList, f, pred, 0);
 	}
-	static <T, R> Tuple2<R, Integer> findMappedImpl(SList<T> sList, Function<T, R> f, Predicate<R> pred, Integer i) {
+	static <T, R> Tuple2<R, Integer> findMappedImpl(SList<T> sList, Function<T, R> f, Predicate<? super R> pred, Integer i) {
 		if (sList.isEmpty()) return new Tuple2<R, Integer>(null, -1);
 		else if (pred.test(f.apply(sList.head()))) return new Tuple2<R, Integer>(f.apply(sList.head()), i);
 		else return findMappedImpl(sList.tail(), f, pred, i + 1);
@@ -375,11 +375,11 @@ public class SL {
 		if (sListList.isEmpty()) return SL.empty();
 		else return sListList.head().append(SL.flatten(sListList.tail()));
 	}
-	static <T> boolean forAll(SList<T> sList, Predicate<T> pred) {
+	static <T> boolean forAll(SList<T> sList, Predicate<? super T> pred) {
 		if (sList.isEmpty()) return true;
 		else return pred.test(sList.head()) && forAll(sList.tail(), pred);
 	}
-	static <T> boolean exists(SList<T> sList, Predicate<T> pred) {
+	static <T> boolean exists(SList<T> sList, Predicate<? super T> pred) {
 		if (sList.isEmpty()) return false;
 		else return pred.test(sList.head()) || exists(sList.tail(), pred);
 	}

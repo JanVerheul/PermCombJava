@@ -94,7 +94,7 @@ public class SL {
 		}
 		return false;
 	}
-	public static <T> boolean contains(SList<T> sList, T elem, Comparator<T> comp) {
+	public static <T> boolean contains(SList<T> sList, T elem, Comparator<? super T> comp) {
 		while (!sList.isEmpty()) {
 			if (comp.compare(elem, sList.head()) == 0) return true;
 			sList = sList.tail();
@@ -108,7 +108,7 @@ public class SL {
 		}
 		return true;
 	}
-	public static <T> boolean containsList(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	public static <T> boolean containsList(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		while (!sList2.isEmpty()) {
 			if (!SL.contains(sList1, sList2.head(), comp)) return false;
 			sList2 = sList2.tail();
@@ -130,7 +130,7 @@ public class SL {
 		destWalker.fixTail(SL.cons(elem, sList));
 		return resultHandle.tail();
 	}
-	public static <T> SList<T> insertOrdered(SList<T> sList, T elem, Comparator<T> comp) {
+	public static <T> SList<T> insertOrdered(SList<T> sList, T elem, Comparator<? super T> comp) {
 		SListImpl<T> resultHandle = SL.part();
 		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && comp.compare(elem, sList.head()) > 0) {
@@ -156,7 +156,7 @@ public class SL {
 		else destWalker.fixTail(SL.cons(elem, sList));
 		return resultHandle.tail();
 	}
-	public static <T> SList<T> setInsertOrdered(SList<T> sList, T elem, Comparator<T> comp) {
+	public static <T> SList<T> setInsertOrdered(SList<T> sList, T elem, Comparator<? super T> comp) {
 		SListImpl<T> resultHandle = SL.part();
 		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && comp.compare(elem, sList.head()) > 0) {
@@ -216,7 +216,7 @@ public class SL {
 		else destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T> SList<T> removeOne(SList<T> sList, T elem, Comparator<T> comp) {
+	public static <T> SList<T> removeOne(SList<T> sList, T elem, Comparator<? super T> comp) {
 		SListImpl<T> resultHandle = SL.part();
 		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty() && comp.compare(elem, sList.head()) != 0) {
@@ -243,7 +243,7 @@ public class SL {
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T> SList<T> removeAll(SList<T> sList, T elem, Comparator<T> comp) {
+	public static <T> SList<T> removeAll(SList<T> sList, T elem, Comparator<? super T> comp) {
 		SListImpl<T> resultHandle = SL.part();
 		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty()) {
@@ -264,7 +264,7 @@ public class SL {
 		}
 		return sList1;
 	}
-	public static <T> SList<T> removeListOne(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	public static <T> SList<T> removeListOne(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		while (!sList2.isEmpty()) {
 			sList1 = removeOne(sList1, sList2.head(), comp);
 			sList2 = sList2.tail();
@@ -278,7 +278,7 @@ public class SL {
 		}
 		return sList1;
 	}
-	public static <T> SList<T> removeListAll(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	public static <T> SList<T> removeListAll(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		while (!sList2.isEmpty()) {
 			sList1 = removeAll(sList1, sList2.head(), comp);
 			sList2 = sList2.tail();
@@ -298,11 +298,11 @@ public class SL {
 		else if (elem.equals(sList.head())) return remDoublesSortedImpl(sList.tail(), elem);
 		else return SL.cons(elem, remDoublesSortedImpl(sList.tail(), sList.head()));
 	}
-	public static <T> SList<T> remDoublesSorted(SList<T> sList, Comparator<T> comp) {
+	public static <T> SList<T> remDoublesSorted(SList<T> sList, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return sList;
 		else return SL.remDoublesSortedImpl(sList.tail(), sList.head(), comp);
 	}
-	public static <T> SList<T> remDoublesSortedImpl(SList<T> sList, T elem, Comparator<T> comp) {
+	public static <T> SList<T> remDoublesSortedImpl(SList<T> sList, T elem, Comparator<? super T> comp) {
 		if (sList.isEmpty()) return SL.single(elem);
 		else if (comp.compare(sList.head(), elem) == 0) return remDoublesSortedImpl(sList.tail(), elem, comp);
 		else return SL.cons(elem, remDoublesSortedImpl(sList.tail(), sList.head(), comp));
@@ -353,12 +353,12 @@ public class SL {
 			else return SL.cons(head2, SL.setMerge(sList1, sList2.tail()));
 		}
 	}
-	public static <T> SList<T> sort(SList<T> sList, Comparator<T> comp) {
+	public static <T> SList<T> sort(SList<T> sList, Comparator<? super T> comp) {
 		int length = sList.size();
 		if (length > 1)	return mergeSort(sList, 0, length, comp);
 		else return sList;
 	}
-	public static <T> SList<T> mergeSort(SList<T> sList, int lowerInc, int upperEx, Comparator<T> comp) {
+	public static <T> SList<T> mergeSort(SList<T> sList, int lowerInc, int upperEx, Comparator<? super T> comp) {
 		int halfWay = (lowerInc + upperEx) / 2;
 		SList<T> lowerPart;
 		SList<T> upperPart;
@@ -368,7 +368,7 @@ public class SL {
 		else upperPart = mergeSort(sList, halfWay, upperEx, comp);
 		return merge(lowerPart, upperPart, comp);
 	}
-	public static <T> SList<T> merge(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	public static <T> SList<T> merge(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList1.isEmpty()) return sList2;
 		else if (sList2.isEmpty()) return sList1;
 		else {
@@ -376,7 +376,7 @@ public class SL {
 			else return SL.cons(sList2.head(), merge(sList1, sList2.tail(), comp)); 
 		}
 	}
-	public static <T> SList<T> setMerge(SList<T> sList1, SList<T> sList2, Comparator<T> comp) {
+	public static <T> SList<T> setMerge(SList<T> sList1, SList<T> sList2, Comparator<? super T> comp) {
 		if (sList1.isEmpty()) return sList2;
 		else if (sList2.isEmpty()) return sList1;
 		else {
@@ -387,14 +387,14 @@ public class SL {
 	}
 	
 	/* Higher Order Workers */
-	public static <T> void forEach(SList<T> sList, BiConsumer<T,Integer> f) {
+	public static <T> void forEach(SList<T> sList, BiConsumer<? super T, Integer> f) {
 		int index = 0;
 		while (!sList.isEmpty()) {
 			f.accept(sList.head(), index++);
 			sList = sList.tail();
 		}
 	}
-	public static <T> SList<T> filter(SList<T> sList, Predicate<T> pred) {
+	public static <T> SList<T> filter(SList<T> sList, Predicate<? super T> pred) {
 		SListImpl<T> resultHandle = SL.part();
 		SListImpl<T> destWalker = resultHandle;
 		while (!sList.isEmpty()) {
@@ -408,7 +408,7 @@ public class SL {
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T> SList<T> filterRev(SList<T> sList, Predicate<T> pred) {
+	public static <T> SList<T> filterRev(SList<T> sList, Predicate<? super T> pred) {
 		SList<T> result = SL.empty();
 		while (!sList.isEmpty()) {
 			if (pred.test(sList.head())) {
@@ -418,7 +418,7 @@ public class SL {
 		}
 		return result;
 	}
-	public static <T> SList<T> minBy(SList<T> sList, Function<T, Integer> f) {
+	public static <T> SList<T> minBy(SList<T> sList, Function<? super T, Integer> f) {
 		if (sList.isEmpty()) return sList;
 		else {
 			SListBuilder<T> builder = new SListBuilder<>();
@@ -440,7 +440,7 @@ public class SL {
 			return builder.build();
 		}
 	}
-	public static <T> SList<T> maxBy(SList<T> sList, Function<T, Integer> f) {
+	public static <T> SList<T> maxBy(SList<T> sList, Function<? super T, Integer> f) {
 		if (sList.isEmpty()) return sList;
 		else {
 			SListBuilder<T> builder = new SListBuilder<>();
@@ -462,7 +462,7 @@ public class SL {
 			return builder.build();
 		}
 	}
-	public static <T, R> SList<R> map(SList<T> sList, Function<T, R> f) {
+	public static <T, R> SList<R> map(SList<T> sList, Function<? super T, ? extends R> f) {
 		SListImpl<R> resultHandle = SL.part();
 		SListImpl<R> destWalker = resultHandle;
 		while (!sList.isEmpty()) {
@@ -474,7 +474,7 @@ public class SL {
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T, R> SList<R> mapRev(SList<T> sList, Function<T, R> f) {
+	public static <T, R> SList<R> mapRev(SList<T> sList, Function<? super T, ? extends R> f) {
 		SList<R> result = SL.empty();
 		while (!sList.isEmpty()) {
 			result = SL.cons(f.apply(sList.head()), result);
@@ -482,7 +482,7 @@ public class SL {
 		}
 		return result;
 	}
-	public static <T, R> SList<R> map(SList<T> sList, BiFunction<T, Integer, R> f) {
+	public static <T, R> SList<R> map(SList<T> sList, BiFunction<? super T, Integer, ? extends R> f) {
 		SList<T> sourceWalker = sList;
 		SListImpl<R> resultHandle = SL.part();
 		SListImpl<R> destWalker = resultHandle;
@@ -496,7 +496,7 @@ public class SL {
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T, R> SList<R> mapRev(SList<T> sList, BiFunction<T, Integer, R> f) {
+	public static <T, R> SList<R> mapRev(SList<T> sList, BiFunction<? super T, Integer, ? extends R> f) {
 		SList<R> result = SL.empty();
 		int index = 0;
 		while (!sList.isEmpty()) {
@@ -505,7 +505,7 @@ public class SL {
 		}
 		return result;
 	}
-	public static <T, U, R> SList<R> map2(SList<T> sList1, BiFunction<T, U, R> f, SList<U> sList2) {
+	public static <T, U, R> SList<R> map2(SList<T> sList1, BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList2) {
 		SList<T> sourceWalker1 = sList1;
 		SList<U> sourceWalker2 = sList2;
 		SListImpl<R> resultHandle = SL.part();
@@ -520,7 +520,7 @@ public class SL {
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T, U, R> SList<R> map2Rev(SList<T> sList1, BiFunction<T, U, R> f, SList<U> sList2) {
+	public static <T, U, R> SList<R> map2Rev(SList<T> sList1, BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList2) {
 		SList<R> result = SL.empty();
 		while (!sList1.isEmpty() && !sList2.isEmpty()) {
 			result = SL.cons(f.apply(sList1.head(), sList2.head()), result);
@@ -529,7 +529,7 @@ public class SL {
 		}
 		return result;
 	}
-	public static <T, R> SList<R> flatMap(SList<T> sList, Function<T, SList<R>> f) {
+	public static <T, R> SList<R> flatMap(SList<T> sList, Function<? super T, ? extends SList<R>> f) {
 		SList<T> sourceWalker = sList;
 		SListImpl<R> resultHandle = SL.part();
 		SListImpl<R> destWalker = resultHandle;
@@ -547,7 +547,7 @@ public class SL {
 		destWalker.fixTail(SL.empty());
 		return resultHandle.tail();
 	}
-	public static <T, R> SList<R> flatMapRev(SList<T> sList, Function<T, SList<R>> f) {
+	public static <T, R> SList<R> flatMapRev(SList<T> sList, Function<? super T, ? extends SList<R>> f) {
 		SList<R> result = SL.empty();
 		while (!sList.isEmpty()) {
 			SList<R> partRes = f.apply(sList.head());
@@ -559,14 +559,14 @@ public class SL {
 		}
 		return result.tail();
 	}
-	public static <T, R> R foldLeft(SList<T> sList, BiFunction<R, T, R> f, R partRes) {
+	public static <T, R> R foldLeft(SList<T> sList, BiFunction<R, ? super T, R> f, R partRes) {
 		while (!sList.isEmpty()) {
 			partRes = f.apply(partRes, sList.head());
 			sList = sList.tail();
 		}
 		return partRes;
 	}
-	public static <T, R> R foldRight(SList<T> sList, BiFunction<T, R, R> f, R partRes) {
+	public static <T, R> R foldRight(SList<T> sList, BiFunction<? super T, R, R> f, R partRes) {
 		SList<T> revWalker = sList.reverse();
 		while (!revWalker.isEmpty()) {
 			partRes = f.apply(revWalker.head(), partRes);
@@ -575,18 +575,18 @@ public class SL {
 		return partRes;
 	}
 
-	public static <T> Tuple2<T, Integer> find(SList<T> sList, Predicate<T> pred) {
+	public static <T> Tuple2<T, Integer> find(SList<T> sList, Predicate<? super T> pred) {
 		return SL.findImpl(sList, pred, 0);
 	}
-	public static <T> Tuple2<T, Integer> findImpl(SList<T> sList, Predicate<T> pred, Integer i) {
+	public static <T> Tuple2<T, Integer> findImpl(SList<T> sList, Predicate<? super T> pred, Integer i) {
 		if (sList.isEmpty()) return new Tuple2<T, Integer>(null, -1);
 		else if (pred.test(sList.head())) return new Tuple2<T, Integer>(sList.head(), i);
 		else return findImpl(sList.tail(), pred, i + 1);
 	}
-	public static <T, R> Tuple2<R, Integer> findMapped(SList<T> sList, Function<T, R> f, Predicate<R> pred) {
+	public static <T, R> Tuple2<R, Integer> findMapped(SList<T> sList, Function<T, R> f, Predicate<? super R> pred) {
 		return SL.findMappedImpl(sList, f, pred, 0);
 	}
-	public static <T, R> Tuple2<R, Integer> findMappedImpl(SList<T> sList, Function<T, R> f, Predicate<R> pred, Integer i) {
+	public static <T, R> Tuple2<R, Integer> findMappedImpl(SList<T> sList, Function<T, R> f, Predicate<? super R> pred, Integer i) {
 		if (sList.isEmpty()) return new Tuple2<R, Integer>(null, -1);
 		else if (pred.test(f.apply(sList.head()))) return new Tuple2<R, Integer>(f.apply(sList.head()), i);
 		else return findMappedImpl(sList.tail(), f, pred, i + 1);
@@ -595,11 +595,11 @@ public class SL {
 		if (sListList.isEmpty()) return SL.empty();
 		else return sListList.head().append(SL.flatten(sListList.tail()));
 	}
-	public static <T> boolean forAll(SList<T> sList, Predicate<T> pred) {
+	public static <T> boolean forAll(SList<T> sList, Predicate<? super T> pred) {
 		if (sList.isEmpty()) return true;
 		else return pred.test(sList.head()) && forAll(sList.tail(), pred);
 	}
-	public static <T> boolean exists(SList<T> sList, Predicate<T> pred) {
+	public static <T> boolean exists(SList<T> sList, Predicate<? super T> pred) {
 		if (sList.isEmpty()) return false;
 		else return pred.test(sList.head()) || exists(sList.tail(), pred);
 	}

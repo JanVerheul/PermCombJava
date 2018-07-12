@@ -42,13 +42,13 @@ public class SListNil<T> implements SList<T> {
 	public boolean contains(T elem) {
 		return false;
 	}
-	public boolean contains(T elem, Comparator<T> comp) {
+	public boolean contains(T elem, Comparator<? super T> comp) {
 		return false;
 	}
 	public boolean containsList(SList<T> sList) {
 		return false;
 	}
-	public boolean containsList(SList<T> sList, Comparator<T> comp) {
+	public boolean containsList(SList<T> sList, Comparator<? super T> comp) {
 		return false;
 	}
 
@@ -59,7 +59,7 @@ public class SListNil<T> implements SList<T> {
 	public SList<T> insertOrdered(T elem) {
 		return SL.single(elem);
 	}
-	public SList<T> insertOrdered(T elem, Comparator<T> comp) {
+	public SList<T> insertOrdered(T elem, Comparator<? super T> comp) {
 		return SL.single(elem);
 	}
 	public SList<T> append(SList<T> sList) {
@@ -79,25 +79,25 @@ public class SListNil<T> implements SList<T> {
 	public SList<T> removeOne(T elem) {
 		return SL.empty();
 	}
-	public SList<T> removeOne(T elem, Comparator<T> comp) {
+	public SList<T> removeOne(T elem, Comparator<? super T> comp) {
 		return SL.empty();
 	}
 	public SList<T> removeAll(T elem) {
 		return SL.empty();
 	}
-	public SList<T> removeAll(T elem, Comparator<T> comp) {
+	public SList<T> removeAll(T elem, Comparator<? super T> comp) {
 		return SL.empty();
 	}
 	public SList<T> removeListOne(SList<T> sList) {
 		return SL.empty();
 	}
-	public SList<T> removeListOne(SList<T> sList, Comparator<T> comp) {
+	public SList<T> removeListOne(SList<T> sList, Comparator<? super T> comp) {
 		return SL.empty();
 	}
 	public SList<T> removeListAll(SList<T> sList) {
 		return SL.empty();
 	}
-	public SList<T> removeListAll(SList<T> sList, Comparator<T> comp) {
+	public SList<T> removeListAll(SList<T> sList, Comparator<? super T> comp) {
 		return SL.empty();
 	}
 	public SList<T> remDoubles() {
@@ -106,7 +106,7 @@ public class SListNil<T> implements SList<T> {
 	public SList<T> remDoublesSorted() {
 		return SL.empty();
 	}
-	public SList<T> remDoublesSorted(Comparator<T> comp) {
+	public SList<T> remDoublesSorted(Comparator<? super T> comp) {
 		return SL.empty();
 	}
 	
@@ -117,72 +117,72 @@ public class SListNil<T> implements SList<T> {
 	public SList<T> sort() {
 		return this;
 	}
-	public SList<T> sort(Comparator<T> comp) {
+	public SList<T> sort(Comparator<? super T> comp) {
 		return this;
 	}
 	public SList<T> merge(SList<T> sList) {
 		return sList;
 	}
-	public SList<T> merge(SList<T> sList, Comparator<T> comp) {
+	public SList<T> merge(SList<T> sList, Comparator<? super T> comp) {
 		return sList;
 	}
 	
 	/* Higher Order Workers */
-	public void forEach(BiConsumer<T, Integer> f) {
+	public void forEach(BiConsumer<? super T, Integer> f) {
 		// nothing to be done
 	}
-	public SList<T> filter(Predicate<T> pred) {
+	public SList<T> filter(Predicate<? super T> pred) {
 		return SL.empty();
 	}
-	public SList<T> filterRev(Predicate<T> pred) {
+	public SList<T> filterRev(Predicate<? super T> pred) {
 		return SL.empty();
 	}
-	public SList<T> minBy(Function<T, Integer> f) {
+	public SList<T> minBy(Function<? super T, Integer> f) {
 		return SL.empty();
 	}
-	public SList<T> maxBy(Function<T, Integer> f) {
+	public SList<T> maxBy(Function<? super T, Integer> f) {
 		return SL.empty();
 	}
-	public <R> SList<R> map(Function<T, R> f) {
+	public <R> SList<R> map(Function<? super T, ? extends R> f) {
 		return SL.empty();
 	}
-	public <R> SList<R> mapRev(Function<T, R> f) {
+	public <R> SList<R> mapRev(Function<? super T, ? extends R> f) {
 		return SL.empty();
 	}
-	public <R> SList<R> map(BiFunction<T, Integer, R> f) {
+	public <R> SList<R> map(BiFunction<? super T, Integer, ? extends R> f) {
 		return SL.empty();
 	}
-	public <R> SList<R> mapRev(BiFunction<T, Integer, R> f) {
+	public <R> SList<R> mapRev(BiFunction<? super T, Integer, ? extends R> f) {
 		return SL.empty();
 	}
-	public <U, R> SList<R> map2(BiFunction<T, U, R> f, SList<U> sList) {
+	public <U, R> SList<R> map2(BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList) {
 		return SL.empty();
 	}
-	public <U, R> SList<R> map2Rev(BiFunction<T, U, R> f, SList<U> sList) {
+	public <U, R> SList<R> map2Rev(BiFunction<? super T, ? super U, ? extends R> f, SList<U> sList) {
 		return SL.empty();
 	}
-	public <R> SList<R> flatMap(Function<T, SList<R>> f) {
+	public <R> SList<R> flatMap(Function<? super T, ? extends SList<R>> f) {
 		return SL.empty();
 	}
-	public <R> SList<R> flatMapRev(Function<T, SList<R>> f) {
+	public <R> SList<R> flatMapRev(Function<? super T, ? extends SList<R>> f) {
 		return SL.empty();
 	}
-	public <R> R foldLeft(BiFunction<R, T, R> f, R partResult) {
+	public <R> R foldLeft(BiFunction<R, ? super T, R> f, R partResult) {
 		return partResult;
 	}
-	public <R> R foldRight(BiFunction<T, R, R> f, R initVal) {
+	public <R> R foldRight(BiFunction<? super T, R, R> f, R initVal) {
 		return initVal;
 	}
-	public boolean forAll(Predicate<T> p) {
+	public boolean forAll(Predicate<? super T> p) {
 		return true;
 	}
-	public boolean exists(Predicate<T> p) {
+	public boolean exists(Predicate<? super T> p) {
 		return false;
 	}
-	public Tuple2<T, Integer> find(Predicate<T> pred) {
+	public Tuple2<T, Integer> find(Predicate<? super T> pred) {
 		return new Tuple2<T, Integer>(null, -1);
 	}
-	public <R> Tuple2<R, Integer> findMapped(Function<T, R> f, Predicate<R> p) {
+	public <R> Tuple2<R, Integer> findMapped(Function<T, R> f, Predicate<? super R> p) {
 		return new Tuple2<R, Integer>(null, -1);
 	}
 
